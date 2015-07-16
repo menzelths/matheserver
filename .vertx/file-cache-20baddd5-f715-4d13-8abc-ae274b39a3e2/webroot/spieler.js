@@ -33,7 +33,7 @@ $(document).ready(function () {
                 $("#aufgabe").html("Aufgabe Nr. " + aufgabennummer + "<br>" + aufgabe.term);
                 //$("body").append("<br>Ergebnis: "+aufgabe.ergebnis);
                 $("#aufgabe").append("<br><input id='lsg' type='text'></input><br><input type='button' value='OK' id='knopf'></input>");
-                $("#lsg").focus();
+                $("#id").focus();
                 $("#lsg").on('keypress', function (event) {
                     if (event.which === 13) {
 
@@ -63,10 +63,9 @@ $(document).ready(function () {
                 $("#info").html("");
 
                 var hoehe = message.info.length * 20;
-                b = $(window).width();
-                $("body").append("<br><canvas id='bild' width='"+b+"px' height='" + hoehe + "px'></canvas>");
+                $("body").append("<br><canvas id='bild' width='400px' height='" + hoehe + "px'></canvas>");
                 var ctx = $("#bild")[0].getContext("2d");
-                
+                b = $(window).width();
                 ctx.fillStyle = "#ffffff";
                 ctx.fillRect(0, 0, b, hoehe);
                 ctx.strokeStyle = "#0000ff";
