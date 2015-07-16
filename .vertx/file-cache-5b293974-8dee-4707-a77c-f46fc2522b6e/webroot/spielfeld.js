@@ -7,7 +7,6 @@ $(document).ready(function () {
     var spieleranzahl=1;
     var spielerListe2=[];
     var aufgabenListe=[];
-    var fertig=false;
     var eb = new vertx.EventBus('/bridge');
     $("body").append("<div id='start'><input type='button' value='Los gehts' id='knopf'></input></div>");
     $("body").append("<div id='namen'></div>");
@@ -28,7 +27,6 @@ $(document).ready(function () {
                 namen[message.nr]=message.wert;
                 var s=new spieler(message.uuid,message.wert);
                 spielerListe2.push(s);
-                s.nr=spielerListe2.length-1;
                 $("#namen").append("<br>"+message.wert);
                 eb.send("matheserver.spieler."+spielerliste[message.nr],{typ:"bitteWarten",wert:message.wert});
             } else if (typ==="neueAufgabe"){
@@ -38,29 +36,7 @@ $(document).ready(function () {
                     spielerListe2[nr].richtig++;
                 }
                 var an=spielerListe2[nr].holeAufgabenNummer();
-                if (an>-1){
-                eb.send("matheserver.spieler."+spielerListe2[nr].uuid,{typ:"neueAufgabe",wert:aufgaben[an],richtig:spielerListe2[nr].richtig,gesamt:spielerListe2[nr].gesamt,platz:-1,anzahlSpieler:spielerListe2.length});
-            } else {
-                fertig=true;
-            }
-                // alle spieler durchgehen
-                
-                var spielerListe3=[];
-                for (var i=0;i<spielerListe2.length;i++){
-                    spielerListe3.push(spielerListe2[i]);
-                }
-                spielerListe3.sort(function(a,b){
-                   return(b.richtig/b.gesamt-a.richtig/a.gesamt); 
-                });
-                
-                $("body").html("");
-                for (var i=0;i<spielerListe3.length;i++){
-                    spielerListe2[spielerListe3[i].nr].platz=i;
-                    var sn=spielerListe3[i].nr;
-                    eb.send("matheserver.spieler."+spielerListe2[sn].uuid,{typ:"platz",wert:i,fertig:fertig,info:spielerListe3});
-                    $("body").append((i+1)+". "+spielerListe2[sn].name+": "+spielerListe2[sn].richtig+" / "+spielerListe2[sn].gesamt+"<br>");
-                }
-                
+                eb.send("matheserver.spieler."+spielerListe2[nr].uuid,{typ:"neueAufgabe",wert:aufgaben[an],richtig:spielerListe2[nr].richtig,gesamt:spielerListe2[nr].gesamt,platz:-1});
             }
         });
     }
@@ -78,7 +54,7 @@ $(document).ready(function () {
             spielerListe2[i].setListe(liste);
             var nr=spielerListe2[i].holeAufgabenNummer();
             
-            eb.send("matheserver.spieler."+spielerListe2[i].uuid,{typ:"neueAufgabe",wert:aufgaben[nr],richtig:0,gesamt:0,platz:-1,anzahlSpieler:spielerListe2.length});
+            eb.send("matheserver.spieler."+spielerListe2[i].uuid,{typ:"neueAufgabe",wert:aufgaben[nr],richtig:0,gesamt:0,platz:-1});
         }
     });
     
@@ -127,8 +103,6 @@ $(document).ready(function () {
         this.name=name;
         this.richtig=0;
         this.gesamt=0;
-        this.nr=0;
-        this.platz=0;
         
         this.setListe=function(liste){
             this.liste=liste;

@@ -52,10 +52,10 @@ $(document).ready(function () {
                     
                 });
             } else if (typ==="platz"){
-                $("#platz").html("Platz: "+(message.wert+1));
+                $("#platz").html("Platz: "+(message.platz+1));
                 if (message.fertig===true){
                     $("#ausgabe").html("Spiel ist beendet.");
-                    
+                    $("#aufgabe").html("Du hast "+richtig+" / "+aufgabennummer +" richtig!");
                 }
                 $("#info").html("");
                 for (var i=0;i<message.info.length;i++){

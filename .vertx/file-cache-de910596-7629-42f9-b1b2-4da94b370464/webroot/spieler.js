@@ -23,15 +23,13 @@ $(document).ready(function () {
                     });
                 
             } else if (typ==="bitteWarten"){
-                $("body").html("<div id='platz'></div><div id='ausgabe'>Ok, "+message.wert+" ...<p>Bitte kurz warten, ehe es los geht!</div><div id='aufgabe'></div><div id='info'</div>");
+                $("body").html("<div id='platz'></div><div id='ausgabe'>Ok, "+message.wert+" ...<p>Bitte kurz warten, ehe es los geht!</div><div id='aufgabe'></div>");
             } else if (typ==="nachricht"){
                 $("body").html(message.wert);
             } else if (typ==="neueAufgabe"){
                 var aufgabe=message.wert;
                 //$("#").html("<div id='ausgabe'></div><div id='aufgabe'></div>");
-                aufgabennummer++;
                 if (aufgabennummer===1){
-                    
                     $("#ausgabe").html("Los geht's!");
                 } 
                 $("#aufgabe").html("Aufgabe Nr. "+aufgabennummer+"<br>"+aufgabe.term);
@@ -39,7 +37,7 @@ $(document).ready(function () {
                 $("#aufgabe").append("<br><input id='lsg' type='text'></input><br><input type='button' value='OK' id='knopf'></input>");
                 $("#knopf").click(function(){
                     var lsg=parseInt($("#lsg").val());
-                    
+                    aufgabennummer++;
                     if (lsg===aufgabe.ergebnis){
                         richtig++;
                         $("#ausgabe").html("Richtig!<br>"+richtig+" / "+aufgabennummer+" richtig!");
@@ -52,16 +50,11 @@ $(document).ready(function () {
                     
                 });
             } else if (typ==="platz"){
-                $("#platz").html("Platz: "+(message.wert+1));
-                if (message.fertig===true){
+                $("#platz").html("Platz: "+(message.platz+1));
+                if (fertig===true){
                     $("#ausgabe").html("Spiel ist beendet.");
-                    
+                    $("#aufgabe").html("Du hast "+richtig+" / "+aufgabennummer +" richtig!");
                 }
-                $("#info").html("");
-                for (var i=0;i<message.info.length;i++){
-                    $("#info").append((i+1)+". "+message.info[i].name+": "+message.info[i].richtig+" / "+message.info[i].gesamt+"<br>");
-                }
-                
             }
         });
         eb.send("matheserver.spielfeld",{typ:"id",nr:uuid}); // schicke eigene uuid

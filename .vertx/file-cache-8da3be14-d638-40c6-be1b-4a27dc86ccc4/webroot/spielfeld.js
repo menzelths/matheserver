@@ -7,7 +7,6 @@ $(document).ready(function () {
     var spieleranzahl=1;
     var spielerListe2=[];
     var aufgabenListe=[];
-    var fertig=false;
     var eb = new vertx.EventBus('/bridge');
     $("body").append("<div id='start'><input type='button' value='Los gehts' id='knopf'></input></div>");
     $("body").append("<div id='namen'></div>");
@@ -38,11 +37,8 @@ $(document).ready(function () {
                     spielerListe2[nr].richtig++;
                 }
                 var an=spielerListe2[nr].holeAufgabenNummer();
-                if (an>-1){
                 eb.send("matheserver.spieler."+spielerListe2[nr].uuid,{typ:"neueAufgabe",wert:aufgaben[an],richtig:spielerListe2[nr].richtig,gesamt:spielerListe2[nr].gesamt,platz:-1,anzahlSpieler:spielerListe2.length});
-            } else {
-                fertig=true;
-            }
+                
                 // alle spieler durchgehen
                 
                 var spielerListe3=[];
@@ -53,12 +49,9 @@ $(document).ready(function () {
                    return(b.richtig/b.gesamt-a.richtig/a.gesamt); 
                 });
                 
-                $("body").html("");
                 for (var i=0;i<spielerListe3.length;i++){
                     spielerListe2[spielerListe3[i].nr].platz=i;
-                    var sn=spielerListe3[i].nr;
-                    eb.send("matheserver.spieler."+spielerListe2[sn].uuid,{typ:"platz",wert:i,fertig:fertig,info:spielerListe3});
-                    $("body").append((i+1)+". "+spielerListe2[sn].name+": "+spielerListe2[sn].richtig+" / "+spielerListe2[sn].gesamt+"<br>");
+                    eb.send("matheserver.spieler."+spielerListe2[spielerListe3[i]].uuid,{typ:"platz",wert:i});
                 }
                 
             }

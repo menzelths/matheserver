@@ -57,7 +57,7 @@ $(document).ready(function () {
                 for (var i=0;i<spielerListe3.length;i++){
                     spielerListe2[spielerListe3[i].nr].platz=i;
                     var sn=spielerListe3[i].nr;
-                    eb.send("matheserver.spieler."+spielerListe2[sn].uuid,{typ:"platz",wert:i,fertig:fertig,info:spielerListe3});
+                    eb.send("matheserver.spieler."+spielerListe2[sn].uuid,{typ:"platz",wert:i,fertig:fertig});
                     $("body").append((i+1)+". "+spielerListe2[sn].name+": "+spielerListe2[sn].richtig+" / "+spielerListe2[sn].gesamt+"<br>");
                 }
                 
