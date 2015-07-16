@@ -63,7 +63,7 @@ $(document).ready(function () {
                     $("body").append("<br><input type='text' id='name'></input><input type='button' id='start' value='OK'></input>");
                     $("#start").click(function () {
                         var name=$("#name").val();
-                        eb.send("matheserver.spielfeld", {typ: "name",wert:name,uuid:uuid});
+                        eb.send("matheserver.spielfeld", {typ: "name",wert:name,nr:spielernummer,uuid:uuid});
                         //replier({typ:"start"});
                     });
         

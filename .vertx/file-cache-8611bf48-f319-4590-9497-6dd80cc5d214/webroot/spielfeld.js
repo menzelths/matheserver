@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var anmeldung=true;
     var anzahlAufgaben=20;
-    //var spielerliste=[];
+    var spielerliste=[];
     var namen=[];
     var aufgaben=[];
     var spieleranzahl=1;
@@ -19,11 +19,9 @@ $(document).ready(function () {
             var typ = message.typ;
             if (typ === "id" && anmeldung === true) {
                 var uuid = message.nr;
-                //spielerliste[spieleranzahl]=uuid;
-               // var s=new spieler(uuid,"");
-                
+                spielerliste[spieleranzahl]=uuid;
                 eb.send("matheserver.spieler."+uuid,{typ:"spielernr",wert:spieleranzahl});
-                  
+                spieleranzahl++;    
             } else if (typ === "id" && anmeldung === false) {
                 eb.send("matheserver.spieler."+uuid,{typ:"nachricht",wert:"Zu spät angemeldet, bitte warten ..."});
             } else if (typ==="name"){
@@ -32,8 +30,7 @@ $(document).ready(function () {
                 spielerListe2.push(s);
                 s.nr=spielerListe2.length-1;
                 $("#namen").append("<br>"+message.wert);
-                eb.send("matheserver.spieler."+message.uuid,{typ:"bitteWarten",wert:message.wert,anzahl:spieleranzahl});
-                spieleranzahl++;  
+                eb.send("matheserver.spieler."+spielerliste[message.nr],{typ:"bitteWarten",wert:message.wert});
             } else if (typ==="neueAufgabe"){
                 var nr=message.nr-1;
                 spielerListe2[nr].gesamt++;
@@ -91,8 +88,8 @@ $(document).ready(function () {
         var aufgaben=[];
         for (var i=0;i<anzahl;i++){
             var operatorwahl=parseInt(Math.random()*4);
-            var zahl1=parseInt(Math.random()*20+1);
-            var zahl2=parseInt(Math.random()*20+1);
+            var zahl1=parseInt(Math.random()*100+1);
+            var zahl2=parseInt(Math.random()*100+1);
             if (operatorwahl===3){
                 zahl1=zahl1*zahl2;
             }

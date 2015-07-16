@@ -12,11 +12,18 @@ $(document).ready(function () {
 
             var typ = message.typ;
             if (typ === "spielernr") {
+                $("#nachricht").html("Bitte gib deinen Namen ein:  ");
+                spielernummer = parseInt(message.wert);
                 
+                    $("body").append("<br><input type='text' id='name'></input><input type='button' id='start' value='OK'></input>");
+                    $("#start").click(function () {
+                        var name=$("#name").val();
+                        eb.send("matheserver.spielfeld", {typ: "name",wert:name,nr:spielernummer,uuid:uuid});
+                        //replier({typ:"start"});
+                    });
                 
             } else if (typ==="bitteWarten"){
                 $("body").html("<div id='platz'></div><div id='ausgabe'>Ok, "+message.wert+" ...<p>Bitte kurz warten, ehe es los geht!</div><div id='aufgabe'></div><div id='info'</div>");
-                spielernummer = parseInt(message.anzahl);
             } else if (typ==="nachricht"){
                 $("body").html(message.wert);
             } else if (typ==="neueAufgabe"){
@@ -48,7 +55,7 @@ $(document).ready(function () {
                 $("#platz").html("Platz: "+(message.wert+1));
                 if (message.fertig===true){
                     $("#ausgabe").html("Spiel ist beendet.");
-                    $("#aufgabe").html("");
+                    
                 }
                 $("#info").html("");
                 for (var i=0;i<message.info.length;i++){
@@ -57,16 +64,7 @@ $(document).ready(function () {
                 
             }
         });
-        $("#nachricht").html("Bitte gib deinen Namen ein:  ");
-                
-                
-                    $("body").append("<br><input type='text' id='name'></input><input type='button' id='start' value='OK'></input>");
-                    $("#start").click(function () {
-                        var name=$("#name").val();
-                        eb.send("matheserver.spielfeld", {typ: "name",wert:name,uuid:uuid});
-                        //replier({typ:"start"});
-                    });
-        
+        eb.send("matheserver.spielfeld",{typ:"id",nr:uuid}); // schicke eigene uuid
         
     }
     
