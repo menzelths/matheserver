@@ -72,7 +72,7 @@ $(document).ready(function () {
                 ctx.strokeStyle = "#0000ff";
 
                 ctx.strokeRect(0, 0, b, hoehe);
-                ctx.font="14px Verdana";
+                ctx.font="18px Verdana";
                 for (var i = 0; i < message.info.length; i++) {
                     //$("#info").append((i+1)+". "+message.info[i].name+": "+message.info[i].richtig+" / "+message.info[i].gesamt+"<br>");
                     if (message.info[i].uuid === uuid) { // eigener wert
@@ -86,10 +86,13 @@ $(document).ready(function () {
                     ctx.fillStyle = "#ff0000";
                     ctx.fillRect(breite, i * 20 + 3, breite2, 12);
                     var text=message.info[i].name;
+                    //ctx.fillStyle="rgba(255,255,0,0.7)";
+                    ctx.fillStyle="#ffff00";
+                    ctx.fillRect(0,i*20,ctx.measureText(text)+20,20);
                     ctx.fillStyle="#000000";
                     
                     
-                    ctx.fillText(text,10,i*20+16);
+                    ctx.fillText(text,10,i*20-2);
                 }
 
             }

@@ -86,6 +86,10 @@ $(document).ready(function () {
                     ctx.fillStyle = "#ff0000";
                     ctx.fillRect(breite, i * 20 + 3, breite2, 12);
                     var text=message.info[i].name;
+                    //ctx.fillStyle="rgba(255,255,0,0.7)";
+                    ctx.fillStyle="#ffff00";
+                    ctx.fillRect(0,i*20,ctx.measureText(text)+20,20);
+                    ctx.fillRect(0,i*20,100,20);
                     ctx.fillStyle="#000000";
                     
                     

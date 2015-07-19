@@ -57,7 +57,7 @@ $(document).ready(function () {
                     spielerListe3.push(spielerListe2[i]);
                 }
                 spielerListe3.sort(function (a, b) {
-                    return(b.richtig - a.richtig);
+                    return(b.richtig / b.gesamt - a.richtig / a.gesamt);
                 });
 
                 $("#ausgabe").html("");
@@ -91,7 +91,7 @@ $(document).ready(function () {
     });
 
     function erstelleAufgaben(anzahl) {
-        var operator = ["+", "-", "*", ":"];
+        var operator = ["+", "-", "*", "/"];
         var aufgaben = [];
         for (var i = 0; i < anzahl; i++) {
             var operatorwahl = parseInt(Math.random() * 4);
