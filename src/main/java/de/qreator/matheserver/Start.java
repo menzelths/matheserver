@@ -76,13 +76,6 @@ public class Start {
             e.printStackTrace();
 
         }
-        /*  
-         try {
-         Runtime.getRuntime().exec("sudo init 6");
-         System.out.println("System wird neu gestartet ...");
-         } catch (IOException ex) {
-         ex.printStackTrace();
-         }*/
     }
 
 }
