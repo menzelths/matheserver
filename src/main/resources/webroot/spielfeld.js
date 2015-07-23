@@ -8,6 +8,7 @@ $(document).ready(function () {
     var spielerListe2 = [];
     var aufgabenListe = [];
     var fertig = false;
+    var zaehler=0;
     var eb = new vertx.EventBus('/bridge');
     $("body").append("<div id='ende'><input type='button' value='Runterfahren' id='ende'></input></div><div id='ausgabe'><div id='start'>Anzahl Aufgaben:<br><input type='text' id='anzahl' value='20'></input><br><input type='button' value='Los gehts' id='knopf'></input></div></div>");
     $("#ausgabe").append("<div id='namen'></div>");
@@ -34,8 +35,9 @@ $(document).ready(function () {
                 namen[message.nr] = message.wert;
                 var s = new spieler(message.uuid, message.wert);
                 spielerListe2.push(s);
+                zaehler++;
                 s.nr = spielerListe2.length - 1;
-                $("#namen").append("<br>" + message.wert);
+                $("#namen").append("<br>" + zaehler+". "+message.wert);
                 eb.send("matheserver.spieler." + message.uuid, {typ: "bitteWarten", wert: message.wert, anzahl: spieleranzahl});
                 spieleranzahl++;
             } else if (typ === "neueAufgabe") {
@@ -73,8 +75,10 @@ $(document).ready(function () {
     }
 
     $("#knopf").click(function () {
+        
         anmeldung = false;
         anzahlAufgaben = parseInt($("#anzahl").val());
+        $("#ausgabe").html("Spiel wurde gestartet ...");
         aufgaben = erstelleAufgaben(anzahlAufgaben);
 
         for (var i = 0; i < spielerListe2.length; i++) {

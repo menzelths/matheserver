@@ -41,14 +41,15 @@ $(document).ready(function () {
                     }
                 });
                 $("#knopf").click(function () {
+                    $("#knopf").hide();
                     var lsg = parseInt($("#lsg").val());
-
+                    
                     if (lsg === aufgabe.ergebnis) {
                         richtig++;
-                        $("#ausgabe").html("Richtig!<br>" + richtig + " / " + aufgabennummer + " richtig!");
+                        $("#ausgabe").html("<span class='richtig'>Richtig!</span><br>" + richtig + " / " + aufgabennummer + " richtig!");
                         eb.send("matheserver.spielfeld", {typ: "neueAufgabe", richtig: true, nr: spielernummer, uuid: uuid});
                     } else {
-                        $("#ausgabe").html("Falsch!<br>Richtig wäre " + aufgabe.ergebnis + " gewesen!<br>" + richtig + " / " + aufgabennummer + " richtig!");
+                        $("#ausgabe").html("<span class='falsch'>Falsch!</span><br>Richtig wäre " + aufgabe.term+" = "+aufgabe.ergebnis + " gewesen!<br>" + richtig + " / " + aufgabennummer + " richtig!");
                         eb.send("matheserver.spielfeld", {typ: "neueAufgabe", richtig: false, nr: spielernummer, uuid: uuid});
                     }
 
@@ -105,6 +106,8 @@ $(document).ready(function () {
             }
         });
         $("#start").click(function () {
+            $("#start").hide();
+            $("#aufgabe").html("<p>Du wirst angemeldet ...");
             var name = $("#name").val();
             eb.send("matheserver.spielfeld", {typ: "name", wert: name, uuid: uuid});
             //replier({typ:"start"});

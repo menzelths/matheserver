@@ -68,3 +68,15 @@ table{
     font-size:60%;
        
 }
+
+.richtig {
+
+    background-color: #aaffaa;
+    font-family: "Arial";
+}
+
+.falsch {
+
+    background-color: #ffaaaa;
+    font-family: "Arial";
+}
