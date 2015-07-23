@@ -16,8 +16,6 @@ import io.vertx.ext.web.handler.sockjs.PermittedOptions;
 import io.vertx.ext.web.handler.sockjs.SockJSHandler;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -33,6 +31,7 @@ public class Start {
         }
 
         Vertx vertx = Vertx.vertx();
+        
         io.vertx.core.http.HttpServer server = vertx.createHttpServer();
 
         Router router = Router.router(vertx);

@@ -32,6 +32,7 @@ $(document).ready(function () {
             } else if (typ === "id" && anmeldung === false) {
                 eb.send("matheserver.spieler." + uuid, {typ: "nachricht", wert: "Zu spät angemeldet, bitte warten ..."});
             } else if (typ === "name") {
+                if (anmeldung===true){
                 namen[message.nr] = message.wert;
                 var s = new spieler(message.uuid, message.wert);
                 spielerListe2.push(s);
@@ -40,6 +41,9 @@ $(document).ready(function () {
                 $("#namen").append("<br>" + zaehler+". "+message.wert);
                 eb.send("matheserver.spieler." + message.uuid, {typ: "bitteWarten", wert: message.wert, anzahl: spieleranzahl});
                 spieleranzahl++;
+            } else {
+                eb.send("matheserver.spieler." + uuid, {typ: "nachricht", wert: "Zu spät angemeldet, bitte warten ..."});
+            }
             } else if (typ === "neueAufgabe") {
                 var nr = message.nr - 1;
                 spielerListe2[nr].gesamt++;
